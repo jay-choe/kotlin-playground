@@ -27,8 +27,11 @@ dependencies {
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'io.github.openfeign:feign-httpclient'
+
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner"
 }
 
 dependencyManagement {

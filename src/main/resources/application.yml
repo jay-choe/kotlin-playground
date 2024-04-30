@@ -1,0 +1,8 @@
+feign:
+  httpclient:
+    enabled: true
+client:
+  test:
+    url: http://localhost
+server:
+  port: 28080
