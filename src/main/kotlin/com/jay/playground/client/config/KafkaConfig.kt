@@ -16,7 +16,9 @@ import org.springframework.kafka.support.serializer.JsonSerializer
 class KafkaConfig {
 
     private val bootStrapServerLocation = "localhost:9092"
+
     fun producerConfig(): Map<String, Any> {
+
         return mutableMapOf<String, Any>().apply {
             this[ProducerConfig.BOOTSTRAP_SERVERS_CONFIG] = bootStrapServerLocation
             this[ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG] = StringSerializer::class.java.name
@@ -43,8 +45,8 @@ class KafkaConfig {
     }
 
     @Bean
-    fun kafkaConsumer(): ConcurrentKafkaListenerContainerFactory<String, PaymentDone> {
-        val factory = ConcurrentKafkaListenerContainerFactory<String, PaymentDone>()
+    fun kafkaConsumer(): ConcurrentKafkaListenerContainerFactory<String, Any> {
+        val factory = ConcurrentKafkaListenerContainerFactory<String, Any>()
         factory.consumerFactory = DefaultKafkaConsumerFactory(consumerConfig())
         factory.setConcurrency(3)
 
