@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 @Service
 class TestConsumerService {
 
-    @KafkaListener(topics = ["Topic2"], groupId = "test-group", containerFactory = "paymentDoneFactory")
+//    @KafkaListener(topics = ["Topic2"], groupId = "test-group", containerFactory = "paymentDoneFactory")
     fun listen(paymentDoneEvent: PaymentDone) {
         println(paymentDoneEvent.idempotentKey)
     }
