@@ -34,7 +34,7 @@ class KafkaConfig {
             this[ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG] = StringSerializer::class.java.name
             this[ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG] = JsonSerializer::class.java.name
             this[ConsumerConfig.GROUP_ID_CONFIG] = "test-group"
-            this[ConsumerConfig.AUTO_OFFSET_RESET_CONFIG] = "earliest"
+            this[ConsumerConfig.AUTO_OFFSET_RESET_CONFIG] = "latest"
             this[ConsumerConfig.ALLOW_AUTO_CREATE_TOPICS_CONFIG] = true
         }
     }
