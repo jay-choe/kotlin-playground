@@ -64,15 +64,14 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:19092,kafka2:19093,kafka3:19094
       KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper1:2181
   mysql:
-    image: mysql:8.0
+    platform: linux/x86_64
+    image: mysql:5.7
     hostname: mysql
     ports:
-      - "3306:3306"
+      - "33061:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: test
       MYSQL_DATABASE: test
-      MYSQL_USER: test
-      MYSQL_PASSWORD: test
     volumes:
-      - mysql-data:/var/lib/mysql
+      - ./mysql-data:/var/lib/mysql
     restart: on-failure:5
