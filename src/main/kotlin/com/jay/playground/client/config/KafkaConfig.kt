@@ -11,6 +11,7 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 import org.springframework.kafka.core.DefaultKafkaProducerFactory
 import org.springframework.kafka.core.KafkaTemplate
+import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
 import org.springframework.kafka.support.serializer.JsonDeserializer
 import org.springframework.kafka.support.serializer.JsonSerializer
 
@@ -42,7 +43,7 @@ class KafkaConfig {
     }
 
     @Bean
-    fun kafkaProducer(): KafkaTemplate<String, PaymentDone> {
+    fun kafkaProducer(): KafkaTemplate<String, Any> {
         return KafkaTemplate(DefaultKafkaProducerFactory(producerConfig()))
     }
 
@@ -53,10 +54,11 @@ class KafkaConfig {
         factory.consumerFactory = DefaultKafkaConsumerFactory(
             consumerConfig(),
             StringDeserializer(),
-            JsonDeserializer(PaymentDone::class.java)
+            ErrorHandlingDeserializer(JsonDeserializer(PaymentDone::class.java))
         )
 
         factory.setConcurrency(3)
         return factory
     }
+
 }
