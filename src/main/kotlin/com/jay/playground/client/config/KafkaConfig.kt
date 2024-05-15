@@ -11,9 +11,12 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 import org.springframework.kafka.core.DefaultKafkaProducerFactory
 import org.springframework.kafka.core.KafkaTemplate
+import org.springframework.kafka.listener.DefaultErrorHandler
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
 import org.springframework.kafka.support.serializer.JsonDeserializer
 import org.springframework.kafka.support.serializer.JsonSerializer
+import org.springframework.util.backoff.ExponentialBackOff
+import java.time.Duration
 
 @Configuration
 class KafkaConfig {
@@ -58,7 +61,20 @@ class KafkaConfig {
         )
 
         factory.setConcurrency(3)
+        factory.setCommonErrorHandler(blockingRetry())
         return factory
     }
+
+    @Bean
+    fun blockingRetry(): DefaultErrorHandler {
+        val backOff = ExponentialBackOff(Duration.ofSeconds(1L).toMillis(), 2.0).apply {
+            this.maxAttempts = 3
+        }
+
+        return DefaultErrorHandler(
+            { _, exception -> println("Failed To Handle ${exception.message} Error For 3 times") },
+            backOff)
+    }
+
 
 }
