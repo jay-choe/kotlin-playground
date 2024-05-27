@@ -14,12 +14,16 @@ class ClickEventService(
         redisTemplate.opsForZSet().incrementScore(event.eventId, event.productId, 1.0)
     }
 
+    fun addClickEvent(event: ProductClickEvent, score: Double) {
+        redisTemplate.opsForZSet().add(event.eventId, event.productId, score)
+    }
+
     fun retrieveProductScore(eventId: String, productId: String): Double {
         return redisTemplate.opsForZSet().score(eventId, productId)!!
     }
 
-    fun retrieveTop10(eventId: String) {
-        redisTemplate.opsForZSet().reverseRange(eventId, 0, 10)
+    fun retrieveTop10(eventId: String): Set<String> {
+        return redisTemplate.opsForZSet().reverseRange(eventId, 0, 10)!!
     }
 
     fun delete(key: String) {

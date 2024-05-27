@@ -24,6 +24,7 @@ class SortedSetPlayground {
     @Test
     fun `동일 상품의 이벤트가 100번 발생하면 스코어 값은 100이다`() {
         val productId = "product-1"
+
         repeat(100) {
             service.addClickEvent(ProductClickEvent(targetEventKey, productId))
         }
@@ -31,4 +32,12 @@ class SortedSetPlayground {
         Assertions.assertThat(service.retrieveProductScore(targetEventKey, productId)).isEqualTo(100.0)
     }
 
+    @Test
+    fun `스코어 상위 랭킹 10 명 추출 테스트`() {
+        repeat(100) {
+            service.addClickEvent(ProductClickEvent(targetEventKey, "product-$it"), it.toDouble())
+        }
+
+        print(service.retrieveTop10(targetEventKey))
+    }
 }
