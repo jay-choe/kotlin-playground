@@ -8,6 +8,9 @@ server:
   port: 28080
 
 spring:
+  redis:
+    host: localhost
+    port: 63790
   datasource:
     url: jdbc:mysql://localhost:33061/test?useSSL=false&serverTimezone=UTC
     username: root
